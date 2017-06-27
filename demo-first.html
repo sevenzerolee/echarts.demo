@@ -21,7 +21,7 @@
 <script type="text/javascript">
 
     var chart = echarts.init(document.getElementById('container'));
-    /*
+    
     chart.setOption({
         title: {
             text: "Echarts entry example"
@@ -33,7 +33,7 @@
             data: ["Sales"]
         },
         xAxis: {
-            data: ["A", "B", "C"]
+            data: []
         },
         yAxis: {
 
@@ -41,11 +41,12 @@
         series: [{
             name: 'Sales',
             type: 'bar',
-            data: [5, 10, 30]
+            data: []
         }]
     });
-    */
+    
 
+    chart.showLoading();
     // 异步方式使用
     // http://localhost:8086/webstudy/data/get
     // http://192.168.101.126:8087/hello/data/get
@@ -70,6 +71,7 @@
         //     console.log(obj[i].name);
         // }
 
+        chart.hideLoading();
         chart.setOption({
             title: {
                 text: d.text
