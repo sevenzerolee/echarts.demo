@@ -2,20 +2,26 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <title>Echarts</title>
 </head>
 
 <body>
-
-    <div style="width: 800px; height: 500px;" id="container"></div>
+    
+    <div style="width: 800px; height: 500px;" id="container">
+        
+    </div>
+    
 
 
 <script src="./script/echarts.js"></script>
+<script src="./script/jquery-1.12.4.min.js"></script>
 <script src="./script/china.js"></script>
 
 <script type="text/javascript">
 
     var chart = echarts.init(document.getElementById('container'));
+    /*
     chart.setOption({
         title: {
             text: "Echarts entry example"
@@ -38,6 +44,77 @@
             data: [5, 10, 30]
         }]
     });
+    */
+
+    // 异步方式使用
+    // http://localhost:8086/webstudy/data/get
+    // http://192.168.101.126:8087/hello/data/get
+    $.get("http://192.168.101.126:8087/hello/data/get").done(function(d) {
+        //console.log(d);
+        //console.log(d.text);
+
+        var xArr = [];
+        var sArr = [];
+
+        var obj = d.list;
+        var len = obj.length;
+        //console.log(obj);
+        for (var item in obj) {
+            //console.log(obj[item].name + ", " + obj[item].number);
+            xArr.push(obj[item].name);
+            sArr.push(obj[item].number)
+        }
+        console.log(xArr + ", " + sArr);
+
+        // for (var i=0; i<len; i++) {
+        //     console.log(obj[i].name);
+        // }
+
+        chart.setOption({
+            title: {
+                text: d.text
+            },
+            tooltip: {
+
+            },
+            legend: {
+                data: [d.topic]
+            },
+            xAxis: {
+                data: xArr
+            },
+            yAxis: {
+
+            },
+            series: [{
+                name: d.topic,
+                type: 'bar',
+                data: sArr
+            }]
+        });
+    });
+    
+
+    
+    
+    
+    
+    $(document).ready(function() {
+
+        /*
+        $.ajax({
+            type: "get",
+            url: "http://192.168.101.126:8087/hello/data/get",
+            dataType: "json",
+            crossDomain: true,
+            success: function(d) {
+                console.log(d);
+            }
+        });
+        */
+
+    });
+    
 
     
 </script>
